@@ -2,6 +2,12 @@ const cityInput = document.querySelector('.CityInput');
 const button = document.getElementById('getWeatherBtn');
 const resultDiv = document.getElementById('resultDiv');
 
+cityInput.addEventListener('keydown', function(event){
+    if(event.key ==='Tab'){
+        button.click();
+    }
+})
+
 
 button.addEventListener('click', async function getWeather() {
     const cityName = cityInput.value;
