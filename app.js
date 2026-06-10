@@ -15,10 +15,20 @@ button.addEventListener('click', async function getWeather() {
 
     try {
         const response = await fetch(`https://wttr.in/${cityName}?format=j1`);
+
+        if(!response.ok){
+            throw new Error("Failed to fetch weather data.")
+        }
         
         const data = await response.json();
 
-            
+        const returnedCity = data.nearest_area[0].areaName[0].value.toLowerCase();
+        console.log(returnedCity);
+        const inputCity = cityName.trim().toLowerCase();
+
+        if(!returnedCity.includes(inputCity) && !inputCity.includes(returnedCity)){
+            throw new Error(`City "${inputCity}" not found. Please check the name.`);
+        }
 
             const currentCondition = data.current_condition[0];
             const Temp = currentCondition.temp_C;
@@ -35,5 +45,4 @@ button.addEventListener('click', async function getWeather() {
     } catch (error) {
         console.error('error fetching weather: ', error);
         resultDiv.innerText = `could not find weather for that city . try again`
-    }
-})
+    }})
